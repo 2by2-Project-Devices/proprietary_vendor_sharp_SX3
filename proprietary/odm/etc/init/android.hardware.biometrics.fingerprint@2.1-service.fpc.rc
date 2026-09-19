@@ -1,0 +1,14 @@
+on post-fs-data
+   mkdir /persist/data/fpc
+   chown system system /persist/data/fpc
+   chmod 0700 /persist/data/fpc
+
+service vendor.fps_hal_fpc /vendor/bin/hw/android.hardware.biometrics.fingerprint@2.1-service.fpc
+    # "class hal" causes a race condition on some devices due to files created
+    # in /data. As a workaround, postpone startup until later in boot once
+    # /data is mounted.
+    class late_start
+    user system
+    group system input uhid
+    oneshot
+    writepid /dev/cpuset/big-core/tasks

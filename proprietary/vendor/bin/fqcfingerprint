@@ -1,0 +1,31 @@
+#!/vendor/bin/sh
+
+fingerprint_autotest() {
+	/vendor/bin/setprop vendor.fqc.fp.end 0
+	/vendor/bin/setprop vendor.fqc.fp.ret 0
+
+	echo "FPC self test"
+	/vendor/bin/fpc_tee_test -s > /dev/null
+	cmdret=$?
+	if [ cmdret -eq 0 ]; then
+		echo "FPC self test Success"
+		/vendor/bin/fpc_tee_test -D > /dev/null
+		cmdret=$?
+		if [ cmdret -eq 0 ]; then
+			echo "FPC defective pixels test Success"
+			ret=1
+		else
+			echo "FPC defective pixels test Fail"
+			ret=3
+		fi
+	else
+		echo "FPC self test Fail"
+		ret=2
+	fi
+
+	echo "ret=$ret"
+	/vendor/bin/setprop vendor.fqc.fp.end 1
+	/vendor/bin/setprop vendor.fqc.fp.ret $ret
+}
+
+fingerprint_autotest

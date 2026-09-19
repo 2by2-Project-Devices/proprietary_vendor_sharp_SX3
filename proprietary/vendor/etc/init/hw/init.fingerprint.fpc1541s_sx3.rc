@@ -1,0 +1,60 @@
+on boot
+    mkdir /dev/stune/big-core
+    chown system system /dev/stune/big-core
+    chmod 0664 /dev/stune/big-core/tasks
+    mkdir /dev/cpuset/big-core
+    write /dev/cpuset/big-core/cpus 6-7
+    write /dev/cpuset/big-core/mems 0
+    chown system system /dev/cpuset/big-core
+    chown system system /dev/cpuset/big-core/tasks
+    chmod 0660 /dev/cpuset/big-core/tasks
+    restorecon_recursive /dev/cpuset/big-core/
+
+on post-fs-data
+    mkdir /data/vendor/fpc 0700 system system
+    mkdir /data/vendor/fpc/fpc_tpl 0700 system system
+    chown system system /sys/bus/spi/devices/spi5.0/hw_reset
+    chown system system /sys/bus/spi/devices/spi5.0/wakeup_enable
+    chown system system /sys/bus/spi/devices/spi5.0/clk_enable
+    chown system system /sys/bus/spi/devices/spi5.0/irq
+    chown system system /sys/bus/spi/devices/spi5.0/power_enable
+    chmod 0200 /sys/bus/spi/devices/spi5.0/hw_reset
+    chmod 0200 /sys/bus/spi/devices/spi5.0/wakeup_enable
+    chmod 0200 /sys/bus/spi/devices/spi5.0/clk_enable
+    chmod 0600 /sys/bus/spi/devices/spi5.0/irq
+    chmod 0200 /sys/bus/spi/devices/spi5.0/power_enable
+
+on property:vendor.fqc.fp.end=0
+    stop vendor.fps_hal_fpc
+
+on property:vendor.fqc.fp.end=1
+    start vendor.fps_hal_fpc
+
+service vendor.fqc_fp_selftest /vendor/bin/fpc_tee_test -s
+    user system
+    group system
+    oneshot
+    disabled
+
+service vendor.fqc_fp_defective_test /vendor/bin/fpc_tee_test -D
+    user system
+    group system
+    oneshot
+    disabled
+
+on property:system.fqc.fp.autotest=1
+    setprop vendor.fqc.fp.ret 0
+    stop vendor.fps_hal_fpc
+
+on property:system.fqc.fp.autotest=1 && property:init.svc.vendor.fps_hal_fpc=stopped
+    exec_start vendor.fqc_fp_selftest
+    setprop vendor.fqc.fp.test_left 1
+
+on property:vendor.fqc.fp.test_left=1 && property:vendor.fqc.fp.internal_ret=11
+    exec_start vendor.fqc_fp_defective_test
+    setprop vendor.fqc.fp.test_left 0
+
+on property:vendor.fqc.fp.test_left=0 && property:vendor.fqc.fp.internal_ret=12
+    setprop vendor.fqc.fp.ret 1
+    start vendor.fps_hal_fpc
+    setprop vendor.fqc.fp.test_left 2
