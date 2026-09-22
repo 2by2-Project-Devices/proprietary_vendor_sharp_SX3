@@ -14778,6 +14778,31 @@ cc_prebuilt_library_shared {
 }
 
 cc_prebuilt_library_shared {
+    name: "libmtk_bsg",
+    owner: "sharp",
+    strip: {
+        none: true,
+    },
+    target: {
+        android_arm64: {
+            srcs: [
+                "proprietary/vendor/lib64/libmtk_bsg.so",
+            ],
+            shared_libs: [
+                "liblog",
+                "libc++",
+                "libc",
+                "libm",
+                "libdl",
+            ],
+        },
+    },
+    compile_multilib: "64",
+    prefer: true,
+    soc_specific: true,
+}
+
+cc_prebuilt_library_shared {
     name: "libmtkcam.atmseventmgr",
     owner: "sharp",
     strip: {
@@ -22486,6 +22511,37 @@ cc_prebuilt_binary {
                 "libbinder_ndk",
                 "vendor.mediatek.hardware.lbs-V1-ndk",
                 "mtk_lbs_service-impl",
+                "libc++",
+                "libc",
+                "libm",
+                "libdl",
+            ],
+        },
+    },
+    compile_multilib: "64",
+    strip: {
+        none: true,
+    },
+    prefer: true,
+    soc_specific: true,
+}
+
+cc_prebuilt_binary {
+    name: "mtk_storageproxyd",
+    owner: "sharp",
+    target: {
+        android_arm64: {
+            srcs: [
+                "proprietary/vendor/bin/mtk_storageproxyd",
+            ],
+            shared_libs: [
+                "libbase",
+                "liblog",
+                "libhardware_legacy",
+                "libcutils",
+                "libtrusty",
+                "libnl",
+                "libmtk_bsg",
                 "libc++",
                 "libc",
                 "libm",

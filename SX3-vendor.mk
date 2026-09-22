@@ -616,6 +616,7 @@ PRODUCT_COPY_FILES += \
     vendor/sharp/SX3/proprietary/vendor/etc/init/hw/init.SNxxx.nfc.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.SNxxx.nfc.rc \
     vendor/sharp/SX3/proprietary/vendor/etc/init/hw/init.SNxxx.se.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.SNxxx.se.rc \
     vendor/sharp/SX3/proprietary/vendor/etc/init/hw/init.fingerprint.fpc1541s_sx3.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.fingerprint.fpc1541s_sx3.rc \
+    vendor/sharp/SX3/proprietary/vendor/etc/init/hw/init.sx3.zram.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.sx3.zram.rc \
     vendor/sharp/SX3/proprietary/vendor/etc/init/init.bt_drv.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.bt_drv.rc \
     vendor/sharp/SX3/proprietary/vendor/etc/init/init.cccimdinit.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.cccimdinit.rc \
     vendor/sharp/SX3/proprietary/vendor/etc/init/init.cccirpcd.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.cccirpcd.rc \
@@ -628,6 +629,7 @@ PRODUCT_COPY_FILES += \
     vendor/sharp/SX3/proprietary/vendor/etc/init/init.wmt_drv.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.wmt_drv.rc \
     vendor/sharp/SX3/proprietary/vendor/etc/init/mtk_agpsd_p.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/mtk_agpsd_p.rc \
     vendor/sharp/SX3/proprietary/vendor/etc/init/mtk_lbs_service.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/mtk_lbs_service.rc \
+    vendor/sharp/SX3/proprietary/vendor/etc/init/mtk_storageproxyd.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/mtk_storageproxyd.rc \
     vendor/sharp/SX3/proprietary/vendor/etc/init/mtkrild.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/mtkrild.rc \
     vendor/sharp/SX3/proprietary/vendor/etc/init/muxreport.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/muxreport.rc \
     vendor/sharp/SX3/proprietary/vendor/etc/init/nvram_daemon.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/nvram_daemon.rc \
@@ -1059,6 +1061,7 @@ PRODUCT_PACKAGES += \
     libmnl \
     libmsnr \
     libmtk-ril \
+    libmtk_bsg \
     libmtkcam.atmseventmgr \
     libmtkcam.debugwrapper \
     libmtkcam.eventcallback \
@@ -1323,6 +1326,7 @@ PRODUCT_PACKAGES += \
     mnld \
     mtk_agpsd \
     mtk_lbs_service \
+    mtk_storageproxyd \
     muxreport \
     nvram_daemon \
     v3avpud \

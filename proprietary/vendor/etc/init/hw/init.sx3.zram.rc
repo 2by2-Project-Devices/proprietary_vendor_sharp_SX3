@@ -1,0 +1,3 @@
+# zram
+on post-fs-data
+    swapon_all /vendor/etc/fstab.enableswap
